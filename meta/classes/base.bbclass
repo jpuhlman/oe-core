@@ -48,6 +48,23 @@ oe_runmake() {
 	${MAKE} ${EXTRA_OEMAKE} "$@" || die "oe_runmake failed"
 }
 
+def recipe_type(d):
+    try:
+        oe
+    except NameError:
+        oe_import(d)
+
+    for recipe_type in oe.data.typed_value('AVAILABLE_RECIPE_TYPES', d):
+        if oe.utils.inherits(d, recipe_type):
+            return recipe_type
+    return 'target'
+
+RECIPE_TYPE = "${@recipe_type(d)}"
+RECIPE_TYPE[doc] = 'The "type" of the current recipe (e.g. target, native, cross)'
+
+AVAILABLE_RECIPE_TYPES = 'target native nativesdk cross crosssdk cross-canadian'
+AVAILABLE_RECIPE_TYPES[type] = 'list'
+AVAILABLE_RECIPE_TYPES[doc] = 'Space separated list of available recipe types'
 
 def base_dep_prepend(d):
 	#
