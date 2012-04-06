@@ -89,6 +89,21 @@ python () {
 			       "CONFIG_EXTRA_CFLAGS=\"${CFLAGS}\""
                         ])
                   ))
+
+  # Depend on fbset-modes if we have fbset support enabled
+  try:
+    defconfig = bb.fetch2.localpath('file://defconfig', d)
+  except bb.fetch2.FetchError:
+    pass
+  else:
+    try:
+      configfile = open(defconfig)
+    except IOError:
+      pass
+    else:
+      with configfile:
+        if 'CONFIG_FBSET=y\n' in configfile.readlines():
+          d.appendVar('RDEPENDS_busybox', ' fbset-modes')
 }
 
 do_prepare_config () {
