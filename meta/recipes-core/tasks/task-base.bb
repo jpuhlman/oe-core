@@ -326,7 +326,7 @@ RRECOMMENDS_task-base-cramfs = "\
 # task-base-nfs provides ONLY client support - server is in nfs-utils package
 #
 RDEPENDS_task-base-nfs = "\
-    portmap"
+    rpcbind"
 
 RRECOMMENDS_task-base-nfs = "\
     kernel-module-nfs "

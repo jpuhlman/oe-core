@@ -23,6 +23,6 @@ SPLASH ?= "psplash"
 RDEPENDS_task-core-apps-console = "\
     avahi-daemon \
     dbus \
-    portmap \
+    rpcbind \
     ${SPLASH}"
 
